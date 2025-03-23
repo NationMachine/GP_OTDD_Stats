@@ -1,0 +1,123 @@
+import re
+import glob
+import os
+import scipy.io
+import csv
+
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import normalize
+
+def atoi(text):
+    return int(text) if text.isdigit() else text
+
+def natural_keys(text):
+    return [ atoi(c) for c in re.split(r'(\d+)', text) ]
+folders = os.listdir()
+
+archivos_en_directorio_mat = glob.glob("//mats_clas_python//*.mat")
+archivos_en_directorio_mat = glob.glob(os.getcwd() + "//mats_clas_python//*.mat")
+
+archivos_en_directorio_mat.sort(key=natural_keys)
+
+resultados_est = []
+
+
+resultados = []
+for p,c in enumerate(archivos_en_directorio_mat):
+    
+    mat_dict = scipy.io.loadmat(archivos_en_directorio_mat[p])
+
+
+    x_data_og = mat_dict['x_train_og'].astype(float)
+    x_data_m3gp = mat_dict['x_train_m3gp'].astype(float)
+    
+    
+    y_train = mat_dict['y_train'].astype(int)
+    clases = np.unique(y_train) 
+    num_clases = np.unique(y_train).size
+    
+    y_test = mat_dict['y_test'].astype(int)
+    clases = np.unique(y_test) 
+    num_clases = np.unique(y_test).size
+
+    MD_train_og = mat_dict['MD_train_og'].astype(float)[0][0]
+    MD_train_m3gp = mat_dict['MD_train_m3gp'].astype(float)[0][0]
+    
+    train_acc = (((100 - MD_train_og ) - (100 -MD_train_m3gp )) / (100 - MD_train_og))
+    error_train = train_acc*100
+    
+    MD_test_og = mat_dict['MD_test_og'].astype(float)[0][0]
+    MD_test_m3gp = mat_dict['MD_test_m3gp'].astype(float)[0][0]
+    
+    test_acc = (((100 -MD_test_og ) - (100 -MD_test_m3gp )) / (100 - MD_test_og))
+    error_test = test_acc*100
+    
+    nodos = mat_dict['nodos'].astype(float)[0][0]
+    nodos = nodos+.1
+
+    f_og = x_data_og.shape[1]
+    f_m3gp = x_data_m3gp.shape[1]
+    
+    dif_f = f_m3gp - f_og
+     
+    if f_m3gp > f_og:
+        print("m3gp mayor a OG")
+        pca = PCA(n_components = f_og)
+        pca_m3gp = pca.fit_transform(x_data_m3gp)
+        pca_og = pca.fit_transform(x_data_og)
+        print ( "Components = ", pca.n_components_ , ";\nTotal explained variance = ",
+      round(pca.explained_variance_ratio_.sum(),4))
+        componentes = pca.n_components_
+        varianza = round(pca.explained_variance_ratio_.sum(),4)
+
+        
+    elif f_og > f_m3gp:
+        print("OG mayor a m3gp")
+        pca = PCA(n_components = f_m3gp)
+        pca_m3gp = pca.fit_transform(x_data_m3gp)
+        pca_og = pca.fit_transform(x_data_og)
+        print ( "Components = ", pca.n_components_ , ";\nTotal explained variance = ",
+      round(pca.explained_variance_ratio_.sum(),4))
+        componentes = pca.n_components_
+        varianza = round(pca.explained_variance_ratio_.sum(),4)
+
+    else:
+        print("son iguales")
+        pca = PCA(n_components = f_og)
+        pca_m3gp = pca.fit_transform(x_data_m3gp)
+        pca_og = pca.fit_transform(x_data_og)
+        print ( "Components = ", pca.n_components_ , ";\nTotal explained variance = ",
+      round(pca.explained_variance_ratio_.sum(),4))
+        componentes = pca.n_components_
+        varianza = round(pca.explained_variance_ratio_.sum(),4)
+                     
+    min_max_scaler = preprocessing.MinMaxScaler()
+    pca_og = min_max_scaler.fit_transform(pca_og)
+    pca_m3gp = min_max_scaler.fit_transform(pca_m3gp)
+    
+   
+    pca_og = np.hstack((pca_og,y_train))
+    pca_m3gp = np.hstack((pca_m3gp,y_train))
+
+    
+    mat_cargado = archivos_en_directorio_mat[p]    
+    mat_cargado = mat_cargado.split(".")
+    mat_cargado = mat_cargado[0]
+    
+    mat_cargado = mat_cargado.split("//")
+    mat_cargado = mat_cargado[1]
+    mat_cargado = mat_cargado.split("\\")
+    mat_cargado = mat_cargado[1]
+    problema = mat_cargado.split("_")[0]
+    
+    resultados = pd.DataFrame(columns = ['Problema', "Varianza", "Componentes PCA"])
+
+    resultado = [mat_cargado, varianza, componentes]
+
+    file = open('Resultados_clas_PCA_m3gp.csv','a', newline='')
+    writer = csv.writer(file)
+
+    writer.writerow(resultado)
+    file.close()
+    
+    del mat_cargado, varianza, componentes
