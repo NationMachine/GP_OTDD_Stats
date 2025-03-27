@@ -58,9 +58,6 @@ for p,c in enumerate(archivos_en_directorio_mat):
     split = len(nombre)
     
 # --------------------------------------------------------    
-    # x_train_og = preprocessing.normalize(x_train_og)
-    # x_train_m3gp = preprocessing.normalize(x_train_m3gp)
-    
     x_train_og_tsne = tsne.fit_transform(x_train_og)
     x_train_m3gp_tsne = tsne.fit_transform(x_train_m3gp)
     
