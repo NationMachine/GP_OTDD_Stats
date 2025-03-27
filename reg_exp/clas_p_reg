@@ -24,9 +24,7 @@ def bivariate_stats(df, label):
       corr_df.loc[col] = [round(res.rvalue, 2), round(res.pvalue, 2), round(res.slope,2), str(res.pvalue <= alpha)]
   return corr_df
 
-
 archivos_en_directorio_mat = glob.glob("*.csv")
-
 archivos_en_directorio_mat.sort(key=natural_keys)
     
 datos = pd.read_csv(archivos_en_directorio_mat[3])
@@ -50,11 +48,7 @@ cor_g = pd.DataFrame(cor_g, columns=index, index = ('OTDD','M3GP features'))
 dfs = np.array_split(datos, 6)
         
 for p,datos in enumerate(dfs):
-    problema = nombre[p]
-    
-    # con_otdd = bivariate_stats(datos[0:29], 'OTDD').transpose()
-    # con_m3gp = bivariate_stats(datos[0:29], 'num rasgos m3gp').transpose()
-    
+    problema = nombre[p]    
     con_otdd = bivariate_stats(datos[0:29], 'OTDD')
     con_m3gp = bivariate_stats(datos[0:29], 'num rasgos m3gp')
     with open('Resultados_pvalue_num.csv','a', newline='') as file:      
@@ -67,7 +61,6 @@ for p,datos in enumerate(dfs):
         
 for p,datos in enumerate(dfs):
     problema = nombre[p]
-
     con_otdd = bivariate_stats(datos[0:29], 'OTDD')
     con_m3gp = bivariate_stats(datos[0:29], 'num rasgos m3gp')
     with open('Resultados_pvalue_bool.csv','a', newline='') as file:      
@@ -80,7 +73,6 @@ for p,datos in enumerate(dfs):
         
 for p,datos in enumerate(dfs):
     problema = nombre[p]
-
     con_otdd = bivariate_stats(datos[0:29], 'OTDD')
     con_m3gp = bivariate_stats(datos[0:29], 'num rasgos m3gp')
     with open('Resultados_cor.csv','a', newline='') as file:      
