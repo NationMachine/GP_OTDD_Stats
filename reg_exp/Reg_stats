@@ -13,11 +13,7 @@ def natural_keys(text):
     return [ atoi(c) for c in re.split(r'(\d+)', text) ]
 
 archivos_en_directorio_mat = glob.glob("*.csv")
-
 archivos_en_directorio_mat.sort(key=natural_keys)
-
-
-
     
 datos = pd.read_csv(archivos_en_directorio_mat[1])
 nombre = datos["OG"]
