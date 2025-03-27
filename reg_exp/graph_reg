@@ -19,7 +19,7 @@ def atoi(text):
 def natural_keys(text):
     return [ atoi(c) for c in re.split(r'(\d+)', text) ]
 
-# ---------------Regificacion------------------
+# ---------------Regreion------------------
 
 archivos_en_directorio_mat = glob.glob(os.getcwd() + "//mats_reg_python//*.mat")
 archivos_en_directorio_csv = glob.glob(os.getcwd() + "//*.csv")
@@ -166,10 +166,7 @@ for p,c in enumerate(archivos_en_directorio_mat):
     norm = plt.Normalize(hue.min(), hue.max())
     sm = plt.cm.ScalarMappable(cmap=palette, norm=norm)
     sm.set_array([])
-
     ax.get_legend().remove()
-    # ax.figure.colorbar(sm, label='Target value')
-
 
     plt.savefig(problema_folder + '/'+ (base +'_OG_Test.pdf'))
     plt.savefig(problema_folder + '/'+ (base +'_OG_Test.png'))
@@ -190,9 +187,8 @@ for p,c in enumerate(archivos_en_directorio_mat):
     norm = plt.Normalize(hue.min(), hue.max())
     sm = plt.cm.ScalarMappable(cmap=palette, norm=norm)
     sm.set_array([])
-
     ax.get_legend().remove()
-    # ax.figure.colorbar(sm, label='Target value')
+
     
     plt.savefig(problema_folder + '/'+ (base +'_M3GP_Test.pdf'))
     plt.savefig(problema_folder + '/'+ (base +'_M3GP_Test.png'))
@@ -202,5 +198,4 @@ for p,c in enumerate(archivos_en_directorio_mat):
     
     del x, y, hue
     del df_train_m3gp_tsne, df_train_og_tsne, df_test_m3gp_tsne, df_test_og_tsne
-    # del x_train_og, x_train_m3gp, x_test_og, x_test_m3gp, tsne
     del x_train_og_tsne, x_train_m3gp_tsne, x_test_og_tsne, x_test_m3gp_tsne
