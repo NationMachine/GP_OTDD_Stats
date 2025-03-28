@@ -32,7 +32,7 @@ for p,c in enumerate(archivos_en_directorio_mat):
     csv_df = pd.read_csv(archivos_en_directorio_csv[0])
     mat_dict = scipy.io.loadmat(archivos_en_directorio_mat[p])
     
---------------------------------------------------------    
+#--------------------------------------------------------    
     x_train_og = mat_dict['x_train_og'].astype(float)
     x_train_m3gp = mat_dict['x_train_m3gp'].astype(float)
     y_train = mat_dict['y_train'].astype(int)
@@ -49,7 +49,7 @@ for p,c in enumerate(archivos_en_directorio_mat):
     nombre = csv_df["Problema"][p]
     base = csv_df['OG'][p]
     
---------------------------------------------------------    
+#--------------------------------------------------------    
     x_train_og = preprocessing.normalize(x_train_og)
     x_train_m3gp = preprocessing.normalize(x_train_m3gp)
     
@@ -99,7 +99,7 @@ for p,c in enumerate(archivos_en_directorio_mat):
         problema_folder = os.mkdir(folder)
     problema_folder = folder
     
---------------------------------------------------------    
+#--------------------------------------------------------    
     x = df_train_og_tsne['componente 1']
     y = df_train_og_tsne['componente 2']
     hue = df_train_og_tsne['clases']
@@ -144,9 +144,10 @@ for p,c in enumerate(archivos_en_directorio_mat):
 
 t = 100
 t = csv_df['nodos']
+
 plt.xlabel('OTDD ')
 plt.ylabel('Train Δerror%')
-sns.scatterplot(x = csv_df['OTDD'], y = csv_df['% ERROR train'], hue = csv_df['Problema'], s = 100, alpha = 0.7, palette = color_grama)
+sns.scatterplot(x = csv_df['OTDD'], y = csv_df['% ERROR train'], hue = csv_df['Problema'], s = t, alpha = 0.7, palette = color_grama)
 plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.,title='Problem')
 plt.show()
 plt.clf()
@@ -168,13 +169,6 @@ plt.clf()
 
 
 plt.xlabel('OTDD')
-plt.ylabel('Problem Features')
-sns.scatterplot(x = csv_df['OTDD'], y = csv_df['num rasgos OG'], hue = csv_df['Problema'], s = t, alpha = 0.7, palette=color_grama)
-plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.,title='Problem')
-plt.show()
-plt.clf()
-
-plt.xlabel('OTDD')
 plt.ylabel('Δ features')
 sns.scatterplot(x = csv_df['OTDD'], y = csv_df['dif rasgos'], hue = csv_df['Problema'], s = t, alpha = 0.7, palette=color_grama)
 plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.,title='Problem')
@@ -190,9 +184,9 @@ plt.show()
 plt.clf()
 
 
-plt.xlabel('Δ features')
-plt.ylabel('Train Δerror%')
-sns.scatterplot(x = csv_df['dif rasgos'], y = csv_df['% ERROR train'], hue = csv_df['Problema'], s = t, alpha = 0.7, palette=color_grama)
+plt.xlabel('M3GP Features')
+plt.ylabel('Test Δerror%')
+sns.scatterplot(x = csv_df['dif rasgos'], y = csv_df['% ERROR test'], hue = csv_df['Problema'], s = t, alpha = 0.7, palette=color_grama)
 plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.,title='Problem', fontsize="15")
 plt.show()
 plt.clf()
@@ -245,22 +239,13 @@ for m,datos in enumerate(dfs):
     plt.show()
     plt.clf()
     
-    
-    plt.xlabel('OTDD')
-    plt.ylabel('Problem Features')
-    sns.scatterplot(x = datos['OTDD'][0:29], y = datos['num rasgos OG'][0:29], s = t, alpha = 0.7, color=color_grama[m])
-    plt.savefig(problema_folder + '/'+ (problema +'_O_vs_PF.pdf'))
-    plt.show()
-    plt.clf()
-    
     plt.xlabel('OTDD')
     plt.ylabel('Δ features')
     sns.scatterplot(x = datos['OTDD'][0:29], y = datos['dif rasgos'][0:29], s = t, alpha = 0.7, color=color_grama[m])
     plt.savefig(problema_folder + '/'+ (problema +'_O_vs_DF.pdf'))
     plt.show()
     plt.clf()
-    
-    
+     
     plt.xlabel('M3GP Features')
     plt.ylabel('Train Δerror%')
     sns.scatterplot(x = datos['num rasgos m3gp'][0:29], y = datos['% ERROR train'][0:29], s = t, alpha = 0.7, color=color_grama[m])
@@ -274,11 +259,5 @@ for m,datos in enumerate(dfs):
     plt.savefig(problema_folder + '/'+ (problema +'_MF_vs_TeE.pdf'))
     plt.show()
     plt.clf()
-    
-    plt.xlabel('Δ features')
-    plt.ylabel('Train Δerror%')
-    sns.scatterplot(x = datos['dif rasgos'][0:29], y = datos['% ERROR train'][0:29], s = t, alpha = 0.7, color=color_grama[m])
-    plt.savefig(problema_folder + '/'+ (problema +'_D_vs_TrE.pdf'))
-    plt.show()
-    plt.clf()
+
     
