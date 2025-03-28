@@ -109,7 +109,7 @@ def generate_png(dot_file_path, pdf_file_path):
     graph.render(pdf_file_path)
     
 # Load the MATLAB file
-archivos_en_directorio_mat = glob.glob(os.getcwd() + "//mats_clas_python//*.mat")
+archivos_en_directorio_mat = glob.glob(os.getcwd() + "//clas_mats//*.mat")
 archivos_en_directorio_csv = glob.glob(os.getcwd() + "//*.csv")
 archivos_en_directorio_mat.sort(key=natural_keys)
 archivos_en_directorio_csv.sort(key=natural_keys)
