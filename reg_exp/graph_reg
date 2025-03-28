@@ -19,9 +19,9 @@ def atoi(text):
 def natural_keys(text):
     return [ atoi(c) for c in re.split(r'(\d+)', text) ]
 
-# ---------------Regreion------------------
+# ---------------Regresion------------------
 
-archivos_en_directorio_mat = glob.glob(os.getcwd() + "//mats_reg_python//*.mat")
+archivos_en_directorio_mat = glob.glob(os.getcwd() + "//reg_mats//*.mat")
 archivos_en_directorio_csv = glob.glob(os.getcwd() + "//*.csv")
 archivos_en_directorio_mat.sort(key=natural_keys)
 archivos_en_directorio_csv.sort(key=natural_keys)
@@ -196,3 +196,74 @@ for p,c in enumerate(archivos_en_directorio_mat):
     del x, y, hue
     del df_train_m3gp_tsne, df_train_og_tsne, df_test_m3gp_tsne, df_test_og_tsne
     del x_train_og_tsne, x_train_m3gp_tsne, x_test_og_tsne, x_test_m3gp_tsne
+color_grama = ['darkgreen', 'darkblue', 'crimson', 'purple', 'darkorange', 'black', 'gold']
+color_grama = ['darkgreen', 'darkblue', 'crimson', 'purple', 'darkorange', 'black']
+rcParams["figure.dpi"] = 300
+rcParams['figure.figsize'] = 10,5
+rcParams["figure.autolayout"] = True
+rcParams["figure.constrained_layout.use"] = True
+plt.rcParams.update({'font.size': 15})
+    
+plt.rc('axes', labelsize = 25)
+plt.rc('axes', titlesize = 25)
+plt.rcParams["font.weight"] = "bold"
+plt.rcParams["axes.labelweight"] = "bold"
+
+nombre = 'Reg_problems_size'    
+folder = os.getcwd() +'\\'+ nombre
+    
+isdir = os.path.isdir(folder)
+if isdir== False:  
+    problema_folder = os.mkdir(folder)
+    
+problema_folder = folder
+
+csv_df = pd.read_csv(archivos_en_directorio_csv[1])
+t = csv_df['nodos']*0.25
+
+plt.xlabel('OTDD ')
+plt.ylabel('Train Δerror%')
+sns.scatterplot(x = csv_df['OTDD'], y = csv_df['% ERROR train'], hue = csv_df['Problema'], s = t, alpha = 0.7, palette = color_grama,legend=True)
+plt.legend(bbox_to_anchor=(19, 19), loc=0, borderaxespad=0.,title='Problem')
+plt.savefig(problema_folder + '/'+ 'Reg_problem_O_vs_TrE.pdf')
+plt.show()
+plt.clf()
+
+plt.xlabel('OTDD ')
+plt.ylabel('Test Δerror%')
+sns.scatterplot(x = csv_df['OTDD'], y = csv_df['% ERROR test'], hue = csv_df['Problema'], s = t, alpha = 0.7, palette=color_grama,legend=False)
+plt.savefig(problema_folder + '/'+ 'Reg_problem_O_vs_TeE.pdf')
+plt.show()
+plt.clf()
+
+
+plt.xlabel('OTDD ')
+plt.ylabel('M3GP Features')
+sns.scatterplot(x = csv_df['OTDD'], y = csv_df['num rasgos m3gp'], hue = csv_df['Problema'], s = t, alpha = 0.7, palette=color_grama,legend=False)
+plt.savefig(problema_folder + '/'+ 'Reg_problem_O_vs_MF.pdf')
+plt.show()
+plt.clf()
+
+
+plt.xlabel('OTDD')
+plt.ylabel('Δ features')
+sns.scatterplot(x = csv_df['OTDD'], y = csv_df['dif rasgos'], hue = csv_df['Problema'], s = t, alpha = 0.7, palette=color_grama, legend=False)
+plt.savefig(problema_folder + '/'+ 'Reg_problem_O_vs_DF.pdf')
+plt.show()
+plt.clf()
+
+
+plt.xlabel('M3GP Features')
+plt.ylabel('Train Δerror%')
+sns.scatterplot(x = csv_df['num rasgos m3gp'], y = csv_df['% ERROR train'], hue = csv_df['Problema'], s = t, alpha = 0.7, palette=color_grama, legend=False)
+plt.savefig(problema_folder + '/'+ 'Reg_problem_M_vs_TrE.pdf')
+plt.show()
+plt.clf()
+
+plt.xlabel('M3GP Features')
+plt.ylabel('Test Δerror%')
+sns.scatterplot(x = csv_df['num rasgos m3gp'], y = csv_df['% ERROR test'], hue = csv_df['Problema'], s = t, alpha = 0.7, palette=color_grama, legend=False)
+plt.savefig(problema_folder + '/'+ 'Reg_problem_M_vs_TeE.pdf')
+plt.show()
+plt.clf()
+
