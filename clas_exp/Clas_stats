@@ -16,7 +16,7 @@ archivos_en_directorio_mat = glob.glob("*.csv")
 
 archivos_en_directorio_mat.sort(key=natural_keys)
     
-datos = pd.read_csv(archivos_en_directorio_mat[1])
+datos = pd.read_csv(archivos_en_directorio_mat[0])
 nombre = datos["OG"]
 nombre = nombre.str.split('_').str.get(0)
 nombre = nombre.unique()
