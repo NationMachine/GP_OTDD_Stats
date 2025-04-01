@@ -22,7 +22,7 @@ The folders are the following:
 
 Each folder contains the following files with the following prefixes:
 
-•	**_OTTD_m3gp** (.csv): Contains all the data points of each run of the problems for clasification or regression. In the case of _Global_, this file contains all the runs. On this _.csv_ you will find information as 
+•	**_OTTD_m3gp** (.csv): Contains all the data points of each run of the problems for clasification or regression. In the case of _Global_, this file contains all the runs. These _.csv_ files contains the following information: 
   [OTDD](https://github.com/microsoft/otdd) score, percentage of improvement, three size, number of original features, M3GP generated features, PCA score and variance to mention a few.
 
 •	**_stas** (.py): This is the code to generate the statistical metrics (mean, median, standard deviation, quartiles, and improvement calculation).
@@ -35,10 +35,13 @@ Each folder contains the following files with the following prefixes:
 
 The **_clas_exp_** and **_reg_exp_** folders contain the folders with the "**_mats**" (.mat) prefix, which contain the raw data for the classification and regression problems created in Matlabn. To open this files in python, you will need [scipy loadmat](https://docs.scipy.org/doc/scipy/reference/generated/scipy.io.loadmat.html).
 
+
+
+
 # MIT Lincense 
 MIT License
 
-Copyright (c) 2025 J. Lee Nation
+Copyright (c) 2025 Joel Nation
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
