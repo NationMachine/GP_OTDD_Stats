@@ -24,6 +24,6 @@ Each folder contains the following files with the following prefixes:
 •	**_p_stats** (.py): This is the code to validate the statistical hypotheses (p, r, slope).
 •	**_graphs** (.py): This is the code to generate the graphs for the levels, group, problem, and run.
 
-The _clas_exp_ and _reg_exp_ folders contain the folders with the "**_mats**" (.mat) prefix, which contain the raw data for the classification and regression problems.
+The **_clas_exp_** and **_reg_exp_** folders contain the folders with the "**_mats**" (.mat) prefix, which contain the raw data for the classification and regression problems.
 
 
